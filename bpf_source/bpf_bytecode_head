@@ -1,0 +1,18 @@
+#include <linux/filter.h>
+
+// To disable the dst-ipv4-based filter, find this value in the k values
+// and change it to any other value.
+__u32 bpf_code_dst_ipv4_enable = 0x90909090;
+
+// To set the dst-ipv4-based filter's IP address, find this value in the
+// k values and set it to the desired IP.
+__u32 bpf_code_ipv4_standin = 0xa0a1a2a3;
+
+// To set the dst-ipv6-based filter's IP address, find this value in the
+// k values and set it to the desired IP.
+__u32 bpf_code_ipv6_standin[][4] = { { 0xb0b1b2b3, 0xb4b5b6b7, 0xb8b9babb, 0xbcbdbebf } };
+
+// A filter entry that simply accepts something
+struct sock_filter accept_sock_filter = { 0x06, 0, 0, 0xffffffff };
+
+struct sock_filter bpf_code[] = {
